@@ -1,0 +1,28 @@
+<form autocomplete="off" [formGroup]="_servi.form">
+  <h4 class="text-center"><strong>{{ _servi.form.get('Cod_objeto')?.value ? "ACTUALIZAR":"CREAR"}}</strong></h4>
+  <div class="row justify-content-center">
+
+      <div class="col-lg-12">
+          <mat-form-field class="example-full-width" appearance="legacy">
+              <mat-label>Nombre </mat-label>
+               <input matInput formControlName="Nombre_objeto">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Descripcion </mat-label>
+             <input matInput formControlName="Descripcion_objeto">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Tipo </mat-label>
+           <input matInput formControlName="Tipo_objeto">
+      </mat-form-field>
+      <br>
+          <div class="text-center">
+              <button mat-raised-button class="btn btn-primary p-2" color="accent" (click)="guardar()">{{_servi.form.get('Cod_objeto')?.value ? "ACTUALIZAR ":"CREAR"}}</button>
+              <button mat-raised-button color="warn" class="btn btn-danger p-2"  (click)="cerrarmodal()">Cerrar</button>
+          </div>
+      </div>
+
+  </div>
+</form>

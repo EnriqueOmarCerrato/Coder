@@ -1,0 +1,106 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="_servi.terapeuta" errorMessage="Name is required.">
+    <div class="row" *ngIf="! _servi.form.get('Cod_matricula')?.value">
+      <div class="col-lg-12">
+        <label><strong>Colaborador</strong> </label>
+      </div>
+      <div class="col-lg-4">
+           <input class="form-control" maxlength="13" minlength="13" placeholder="Identidad" [(ngModel)]="colaborador">
+      </div>
+      <div class="col-lg-4">
+        <button mat-raised-button class="btn btn-primary btn-block" color="accent"
+        (click)="buscarcolaborador()">buscar</button>
+      </div>
+      <div class="col-lg-4">
+      <h6  *ngIf="sic"><strong>Nombre: </strong>{{resultadoc[0]?.Nombre}} {{resultadoc[0]?.Apellido }}</h6>
+      <h6 *ngIf="sinresultadoc">Sin resultado</h6>
+    </div>
+    </div>
+    <br *ngIf="! _servi.form.get('Cod_matricula')?.value">
+    <form [formGroup]="_servi.terapeuta">
+      <ng-template matStepLabel>Asignacion terapeuta</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo especialidad</mat-label>
+            <mat-select formControlName="Cod_tipo_especialidad" name="food">
+              <mat-option *ngFor="let item of (_servi.responsetipo_especialidad$|async)" [value]="item.Cod_tipo_especialidad">
+                {{item.Tipo_especialidad}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Horas asignadas</mat-label>
+            <input matInput formControlName="horas_asignadas">
+          </mat-form-field>
+        </div>
+  
+      </div>
+      <div>
+        <button mat-button class="btn btn-primary" matStepperNext>Siguiente</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()">Salir</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="_servi.form" errorMessage="Address is required.">
+<div class="row" *ngIf="! _servi.form.get('Cod_matricula')?.value">
+  <div class="col-lg-12">
+    <label><strong>Persona</strong> </label>
+  </div>
+  <div class="col-lg-4">
+       <input class="form-control" maxlength="13" minlength="13" placeholder="Identidad" [(ngModel)]="text">
+  </div>
+  <div class="col-lg-4">
+    <button mat-raised-button class="btn btn-primary btn-block" color="accent"
+    (click)="buscar()">buscar</button>
+  </div>
+  <div class="col-lg-4">
+  <h6  *ngIf="si"><strong>Nombre: </strong>{{resultado[0]?.Nombre}} {{resultado[0]?.Apellido }}</h6>
+  <h6 *ngIf="sinresultado">Sin resultado</h6>
+</div>
+</div>
+<br *ngIf="! _servi.form.get('Cod_matricula')?.value">
+
+    <form [formGroup]="_servi.form">
+      <ng-template matStepLabel>Matricula</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo inclusion</mat-label>
+            <mat-select formControlName="Cod_ficha_inclusion">
+              <mat-option *ngFor="let option of _servi.responseficha_inclusion$ | async" [value]="option.Cod_ficha_inclusion">
+                {{option.Nombre_institucion_empresa}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+       
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Horas asignadas beneficiario</mat-label>
+            <input matInput formControlName="horas_asignadas_beneficiario">
+          </mat-form-field>
+        </div>
+
+           
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Observacion terapia</mat-label>
+            <input matInput formControlName="Observacion_terapia">
+          </mat-form-field>
+        </div>
+       
+  
+      </div>
+      <div>
+        <button mat-button class="btn btn-danger" matStepperPrevious> Ficha Anterior</button>
+        <button mat-button class="btn btn-primary" (click)="guardar()" matStepperNext>Finalizar</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()">Salir</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
+

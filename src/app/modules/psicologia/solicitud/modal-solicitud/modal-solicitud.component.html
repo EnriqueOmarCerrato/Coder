@@ -1,0 +1,134 @@
+<form autocomplete="off" [formGroup]="_servi.form">
+  <h4 class="text-center"><strong>{{ _servi.form.get('Cod_solicitud_evaluacion')?.value ?
+      "ACTUALIZAR":"CREAR"}}</strong></h4>
+  <div class="row justify-content-center">
+
+    <div class="col-lg-8">
+      <mat-form-field appearance="fill">
+        <mat-label>Departamento</mat-label>
+        <mat-select formControlName="Cod_departamento" name="food">
+          <mat-option *ngFor="let option of _servi.responsedepartamento$ | async" [value]="option.Cod_departamento">
+            {{option.Departamento}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-8">
+      <mat-form-field appearance="fill">
+        <mat-label>Sede</mat-label>
+        <mat-select formControlName="Cod_sede" name="food">
+          <mat-option *ngFor="let option of _servi.responseSede$ | async" [value]="option.Cod_sede">
+            {{option.Nombre_sede}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    
+    <div class="col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo evaluacion</mat-label>
+        <mat-select formControlName="Cod_tipo_evaluacion" name="food">
+          <mat-option *ngFor="let option of _servi.responseevaluacion$ | async" [value]="option.Cod_tipo_evaluacion">
+            {{option.Tipo_evaluacion}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+    <div class="col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Parentesco</mat-label>
+        <mat-select formControlName="Cod_parentesco" name="food">
+          <mat-option *ngFor="let option of _servi.responseparentesco$ | async" [value]="option.Cod_parentesco">
+            {{option.Parentesco}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="Cod_estatus" name="food">
+          <mat-option *ngFor="let option of _servi.responsestatus$ | async" [value]="option.Cod_estatus">
+            {{option.Estatus}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre beneficiario</mat-label>
+        <textarea matInput  formControlName="Nombre_beneficiario"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Edad beneficiario</mat-label>
+        <textarea matInput formControlName="Edad_beneficiario"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Direccion actual</mat-label>
+        <textarea matInput  formControlName="Direccion_actual"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre responsable</mat-label>
+        <textarea matInput  formControlName="Nombre_responsable"></textarea>
+      </mat-form-field>
+    </div>
+
+    
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Telefono fijo</mat-label>
+        <textarea matInput  formControlName="Telefono_fijo"></textarea>
+      </mat-form-field>
+    </div>
+
+    
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Telefono celular</mat-label>
+        <textarea matInput  formControlName="Telefono_celular"></textarea>
+      </mat-form-field>
+    </div>
+
+    
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Correo electronico</mat-label>
+        <textarea matInput  formControlName="Correo_electronico"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-form-field aclass="example-full-width" appearance="legacy">
+        <mat-label>Fecha solicitud</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="Fecha_solicitud">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    
+ 
+      <div class="text-center">
+        <button mat-raised-button class="m-2" class="btn btn-primary" color="accent"
+          (click)="guardar()">{{_servi.form.get('Cod_solicitud_evaluacion')?.value ? "ACTUALIZAR ":"CREAR"}}</button>
+        <button mat-raised-button color="warn" class="btn btn-danger" (click)="cerrarmodal()">Cerrar</button>
+      </div>
+
+
+  </div>
+</form>

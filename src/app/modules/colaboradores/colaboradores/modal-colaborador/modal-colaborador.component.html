@@ -1,0 +1,182 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="_servi.datospersonales" errorMessage="Name is required.">
+    <form [formGroup]="_servi.datospersonales">
+      <ng-template matStepLabel>Datos personales</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Genero</mat-label>
+            <mat-select formControlName="Cod_genero" name="food">
+              <mat-option *ngFor="let item of (_servi.responsegenero$|async)" [value]="item.Cod_genero">
+                {{item.Genero}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Nacionalidad</mat-label>
+            <mat-select formControlName="Cod_nacionalidad" name="food">
+              <mat-option *ngFor="let item of (_servi.responseNacionalidad$|async)" [value]="item.Cod_nacionalidad">
+                {{item.Nacionalidad}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado civil</mat-label>
+            <mat-select formControlName="Cod_estado_civil">
+              <mat-option *ngFor="let item of (_servi.responseestadocivil$|async)" [value]="item.Cod_estado_civil">
+                {{item.Estado_civil}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Departamento de Residencia</mat-label>
+            <mat-select formControlName="Cod_departamento">
+              <mat-option *ngFor="let item of (_servi.responsedepartamentoo$|async)" [value]="item.Cod_departamento">
+                {{item.Departamento}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Estatus</mat-label>
+            <mat-select formControlName="Cod_estatus">
+              <mat-option *ngFor="let item of (_servi.responsestatus$|async)" [value]="item.Cod_estatus">
+                {{item.Estatus}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Nombre de la Persona</mat-label>
+            <input matInput formControlName="Nombre">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Apellido de la Persona </mat-label>
+            <input matInput formControlName="Apellido">
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-lg-3">
+         <input type="file" (change)="cargar($event)">
+        </div> -->
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>No. Identidad de Persona</mat-label>
+            <input matInput formControlName="No_identidad">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <label for="avatar">Documento de identidad</label>
+            <input type="file" (change)="onUpload($event)">
+        </div> 
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Lugar de Nacimiento </mat-label>
+            <input matInput formControlName="Lugar_nacimiento">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field aclass="example-full-width" appearance="legacy">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="Fecha_nacimiento">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Residencia Actual </mat-label>
+            <input matInput formControlName="Residencia_actual">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Teléfono Fijo de Persona </mat-label>
+            <input matInput formControlName="Telefono_fijo">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Correo Electrónico de Persona</mat-label>
+            <input matInput formControlName="Correo_electronico">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Teléfono celular de Persona </mat-label>
+            <input matInput formControlName="Telefono_celular">
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <button mat-button class="btn btn-primary" matStepperNext>Siguiente</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()">Salir</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="_servi.form" errorMessage="Address is required.">
+    <form [formGroup]="_servi.form">
+      <ng-template matStepLabel>Colaborador</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Sede</mat-label>
+            <mat-select formControlName="Cod_sede">
+              <mat-option *ngFor="let option of _servi.responsesede$ | async" [value]="option.Cod_sede">
+                {{option.Nombre_sede}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Departamento laboral</mat-label>
+            <mat-select formControlName="Cod_departamento_laboral">
+              <mat-option *ngFor="let option of _servi.responsedepartamento$ | async" [value]="option.Cod_departamento_laboral">
+                {{option.Departamento_laboral}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Cargo principal</mat-label>
+            <input matInput formControlName="Cargo_principal">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Descripcion funciones</mat-label>
+            <input matInput formControlName="Descripcion_funciones">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field aclass="example-full-width" appearance="legacy">
+            <mat-label>Fecha contrato</mat-label>
+            <input matInput [matDatepicker]="pickerr" formControlName="Fecha_contratacion">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="pickerr"></mat-datepicker-toggle>
+            <mat-datepicker #pickerr></mat-datepicker>
+          </mat-form-field>
+        </div>
+      
+
+      </div>
+      <div>
+        <button mat-button class="btn btn-danger" matStepperPrevious> Ficha Anterior</button>
+        <button mat-button class="btn btn-primary" (click)="guardar()" matStepperNext>Finalizar</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()">Salir</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,0 +1,387 @@
+<div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Personas</li>
+                </ol>
+            </div>
+        </nav>
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>Personas</mat-card-title>
+  
+            </mat-card-header>
+            <mat-card-content>
+           
+                <div class="row">
+                    <div class="col-lg-2">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                              <mat-label>Buscar </mat-label>
+                               <input matInput  [(ngModel)]="buscar">
+                          </mat-form-field>
+                     </div>
+                     <div class="col-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="impo()">
+                            PDF
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button mat-raised-button class="btn btn-primary" (click)="crear()">
+                        <i class="fas fa-laptop-medical"></i>
+                        <span style="margin-left: 10px;">Crear Persona</span>
+                    </button> 
+                </div>
+                <div  id="reporte" class="table-responsive mt-4 ">
+                    <table class="table table-striped" >
+                        <thead>
+
+                            <tr>
+                                <th scope="col " role="columnheader" class="text-center">Codigo</th>
+                                <th scope="col " role="columnheader" class="text-center">Tipo persona</th>
+                                <th scope="col " role="columnheader" class="text-center">Nombre</th>
+                                <th scope="col " role="columnheader" class="text-center">Apellido</th>
+                                <th scope="col " role="columnheader" class="text-center">Indentidad</th>
+                                <th scope="col " role="columnheader" class="text-center">Documento identidad</th>
+                                <th scope="col " role="columnheader" class="text-center">Lugar nacimiento</th>
+                                <th scope="col " role="columnheader" class="text-center" id="d">ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody role="rowgroup">
+                            <tr id="some"
+                                *ngFor="let item of (service.responsepersonas$ | async)! | slice:d:h | FILTER:buscar:campo">
+                                <td role="cell " data-title="ROL" class="text-center">{{item.Cod_persona | uppercase}}</td>
+                                <td role="cell " data-title="DESCRIPCION" class="text-center">{{item.Tipo_persona | uppercase}}</td>
+                                <td role="cell " data-title="DESCRIPCION" class="text-center">{{item.Nombre | uppercase}}</td>
+                                <td role="cell " data-title="ROL" class="text-center">{{item.Apellido | uppercase}}</td>
+                                <td role="cell " data-title="DESCRIPCION" class="text-center">{{item.No_identidad | uppercase}}</td>
+                                <td role="cell " data-title="ROL" class="text-center"><a (click)="downloadPdf(item.Documento_id)"><mat-icon>get_app</mat-icon></a></td>
+                                <td role="cell " data-title="DESCRIPCION" class="text-center">{{item.Lugar_nacimiento | uppercase}}</td>
+                                <th id="d" role="cell" class="text-center" data-title="Acciones">
+                                    <button mat-mini-fab color="warn" class="btn btn-success" (click)="pdf(item)">
+                                        <mat-icon>print</mat-icon>
+                                      </button>
+                                    <button mat-mini-fab color="warn" class="btn btn-primary" (click)="editar(item)">
+                                      <mat-icon>create</mat-icon>
+                                    </button>
+                                    <button mat-mini-fab class="btn btn-danger" (click)="eliminar(item.Cod_persona)">
+                                      <mat-icon>delete_forever</mat-icon>
+                                    </button>
+                                    <button type="button" class="btn btn-success" (click)="editar(item)">
+                                        VER MAS
+                                    </button>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+  
+                    <mat-paginator id="d"  [length]="(service.responsepersonas$  | async)?.length" [pageSize]="pageSize"
+                        [pageSizeOptions]="pageSizeOptions" (page)="cambioPagina($event)">
+                    </mat-paginator>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+  
+  </div>
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div [ngClass]="(mostrarModal)?'col-lg-8 modale':'modalInactive'"
+style="left: 50px;position: fixed;top: 0px;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+<div style="height: 30px; width: 100%; text-align: center; background-color: #e2e2e2;">
+    <div style="height: 100%; width: calc(100% - 260px); float: left; padding-top: 5px;">
+        Fichas 
+    </div>
+    <div style="background-color: #ff3636; float: right; height: 100%; user-select: none; width: 80px; color: white; padding-top: 5px; cursor: pointer;"
+        (click)="mostrarModal=false;this.mostrarInsert=true;">Cerrar</div>
+</div>
+<div class="row">
+  <div style="width: 100%;text-align: center;">
+    <app-loading *ngIf="loadingConfig"></app-loading>
+  </div>
+    
+    <div class="barraTabs" style="margin-left: 16px;">
+		<div *ngIf="mostrarFichas">
+			<div (click)="objActivo=5;formActivo='formFicha';inactiveTabs();fichaGeneral=true;getFormAndData2(idActivo,'Cod_persona','FichaGeneral')" class="{{ fichaGeneral ? 'tabHijoActive' : 'tabHijoInactive'}}">
+				<div class="titleTabNoDin">Ficha General</div>
+			</div>
+			<div (click)="inactiveTabs();fichaSalud=true;" class="{{ fichaSalud ? 'tabHijoActive' : 'tabHijoInactive'}}">
+				<div class="titleTabNoDin">Ficha de Salud</div>
+			</div>
+			<div (click)="inactiveTabs();fichaInclu=true;" class="{{ fichaInclu ? 'tabHijoActive' : 'tabHijoInactive'}}">
+				<div class="titleTabNoDin">Ficha de Inclusión</div>
+			</div>
+			<div (click)="inactiveTabs();fichaInsti=true;" class="{{ fichaInsti ? 'tabHijoActive' : 'tabHijoInactive'}}">
+				<div class="titleTabNoDin">Ficha Institucional</div>
+			</div>
+			<div (click)="inactiveTabs();fichaFamEncargado=true;" class="{{ fichaFamEncargado ? 'tabHijoActive' : 'tabHijoInactive'}}">
+				<div class="titleTabNoDin">Ficha Encargado</div>
+			</div>
+		</div>
+	</div>
+
+    <form id="formFicha" style="margin-left: 78px;margin-top: 20px;" class="{{ fichaGeneral ? '' : 'divNone'}}" #formFicha data-nform="formFicha">
+        <input data-where="1" data-q="codPersona" value="2" type="hidden" class="form-control">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="inlineRadioOptions">Carnet Discapacidad:
+                </label>
+                <select data-insert='1' data-edit='1' data-getValue='1' data-q="carnetDis" class="form-control">
+                    <option value="">Seleccione</option>
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inlineRadioOptions">Bono de Discapacidad
+                </label>
+                <select data-insert='1' data-edit='1' data-getValue='1' data-q="bonoDis" class="form-control">
+                    <option value="">Seleccione</option>
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inlineRadioOptions">Acceso a Computadora
+                </label>
+                <select data-insert='1' data-edit='1' data-getValue='1' data-q="accessPc" class="form-control">
+                    <option value="">Seleccione</option>
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inlineRadioOptions">Acceso a Internet
+                </label>
+                <select data-insert='1' data-edit='1' data-getValue='1' data-q="accessInt" class="form-control">
+                    <option value="">Seleccione</option>
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Instituto de Procedencia
+                </label> <input data-q="InstitutoProcedencia" data-insert='1' data-edit='1' type="text" style="text-transform: uppercase;" maxlength="30" autocomplete="off" class="form-control" 
+                    name="facturas">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Permanencia en la Institución
+                </label> <input data-q="PermanenciaInstitucion" data-insert='1' data-edit='1' type="text"  style="text-transform: uppercase;" maxlength="30"
+                    autocomplete="off" class="form-control" type="text">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Nivel Academico</label>
+                <select data-insert='1' data-edit='1' data-getValue='1' data-q="nivelAcademico" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Telefono Instituto</label>
+                <input data-q="TelefonoInstituto" data-insert='1' data-edit='1' type="text" style="text-transform: uppercase;" maxlength="30" autocomplete="off" class="form-control" 
+                    name="facturas">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Correo Instituto</label>
+                <input data-q="CorreoInstituto" data-insert='1' data-edit='1' type="text" style="text-transform: uppercase;" maxlength="30" autocomplete="off" class="form-control" 
+                    name="facturas">
+            </div>
+            <div class="form-group col-md-2" style="margin-top: 35px;">
+                <button *ngIf="adFichaGeneral" (click)="ingresoForm(formFicha,'Ficha Agregada Correctamente');" type="button" class="btn btn-success"
+                style="margin-top: 35px;margin-left: 20px;">Agregar</button>
+                <button *ngIf="!adFichaGeneral" type="button" (click)="EditForm(formFicha);" class="btn btn-info" style="margin-top: 35px;margin-left: 20px;">Actualizar</button>
+            </div>
+        </div>
+    </form>
+  </div>
+    
+</div>
+<div *ngIf="mostrarModal" class="bloqueo"></div>
+<div class="barraTabs" style="">
+    <div class="{{ verBeneficiarios ? 'tabHijoActive' : 'tabHijoInactive'}}">
+        <div (click)="verBeneficiarios=true;agregarBene=false;verFichas=false;" class="titleTabNoDin">Ver Beneficiarios</div>
+    </div>
+    <div class="{{ agregarBene ? 'tabHijoActive' : 'tabHijoInactive'}}">
+        <div (click)="agregarBene=true;verBeneficiarios=false;verFichas=false;" class="titleTabNoDin">Agregar Beneficiario</div>
+    </div>
+</div>
+
+<div class="col-md-12" style="padding-top: 10px;">
+    <div class="{{ verBeneficiarios ? '' : 'divNone'}}" class="card">
+        <div class="card-body">
+            <div>
+                <button (click)="verBeneficiarios=false;agregarBene=true;verFichas=false;" type="button" class="btn btn-success" style="float: left;height: 31px;width: 124px;margin-bottom: 10px;">Agregar</button>
+              </div>
+            <app-table-data *ngIf="!loading" [data_]="data"></app-table-data>
+        </div>
+    </div>
+    
+
+    <div class="{{ agregarBene ? '' : 'divNone'}}" class="card">
+        <div class="card-body">
+            <div class="col-sm" style="margin-bottom: 20px;">
+                <form data-nform="formBeneficiarios" id="formBeneficiarios" #form>
+                    <div class="form-row">
+                        <input data-where="1" data-q="codPersona" value="" type="hidden" class="form-control">
+                        <div class="form-group col-md-3">
+                            <label>No. Identidad:</label>
+                            <div style="width: 227px;float: left;">
+                                <input #ident data-q="codIdPersona" data-insert="1" data-edit="1" type="text" maxlength="30" text=""
+                                    autocomplete="off" min="1" max="99" class="form-control"
+                                    style="float: left;text-transform: uppercase;width: 187px;" data-old="0101-1991-12123">
+                                <div (click)="inactiveTabs();fichaBasica=true;buscarId(ident)" class="input-group-append" style="float: right;width: 38px;height: 38px;"><span
+                                        class="input-group-text"><img src="https://www.svgrepo.com/show/366153/find.svg" intrinsicsize="512 x 512"
+                                            width="20" height="20" srcset="https://www.svgrepo.com/show/366153/find.svg 4x" alt="Eye SVG Vector"
+                                            title="Eye SVG Vector" style="cursor: pointer;"></span></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="fecha">Nombre
+                            </label>
+                            <input data-evalClass="1" data-q="nombPersona" data-insert='1' data-edit='1' type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Apellidos
+                            </label> <input data-evalClass="1" data-q="apellidoPersona" data-insert='1' data-edit='1'
+                                style="text-transform: uppercase;" maxlength="30" text autocomplete="off"
+                                class="form-control" type="text">
+                        </div>
+                        <hr>
+                        <div _ngcontent-mri-c60="" style="
+    border-bottom-width: 20px;
+    padding-bottom: 30px;
+    padding-right: 40px;
+"><img _ngcontent-mri-c60="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAPFBMVEXMzMzl5eXg4ODv7+/R0dHU1NTb29vt7e3Z2dno6Ojx8fHi4uLs7Ozq6urj4+PPz8/e3t7W1tby8vL09PQMHpbdAAADDUlEQVR42u3dWZLsKAwFUDEYD/UAw93/XvuTj46OLrsgJdXT2cGNRAxOEZAxxhhjjDHGGGOMMcYYYwy/2u6ScweAnnO5W9UY4ig7/mUvR1WVImX8p5y0ZEkn/seZSLzqA74h+EqSRYdvc5Gkqg6PuEoi+Y6Huid5WsALoZEsteClUkmQbcdr+0ZiJPxIIiEKfqiQCA4/5pTnGJzyHIOTkUN/koRpEjHaOqbpG/HZMdFObG5MdROT2jFVr8TDYzJPPDom68xTr/YpOGO6TAwiFoi6597h5htZ+scWlqCPa1iica2G+tfEE0ucnBtf3VtgLMK0HOpfEhsWaRbkHY9FvAWxIBbEglgQC2JBLIgFsd2vBbEgXEHs44MFsSAWxIL8FUEylsj0WWnHInti79JS2LlVsFRR/pfCEHWfDgeve8IaMldXkNYuISxnQaQFsWJ/5sRiJ0enluaurQ2LbfQhAUsF+hTPsEPRuGuMdh55rF5Y5qosXdjqu7Gd8oE1fGGJL/q4I2C6cEi9vq7kgvsXw7BSUPKO+NSAaUIlRg3TNLviKmqzclVi5hm27oJPWYH4NeWVPmSG7z9Sz4uRRPDKK30Iuit9aMorffDKB9bwB6/9IUnihZeuSKJsvN95+T8QJRIn8eXgX00CSVTYmjX4630jkS48dJFMjumczj9vJZIp8hxD+IvkIqkyywGXfzfvSaoDjxwkVcMjjaSqeKSSWHiELIisnXwgoeK945H9jiTO5ne8sPtNVIoS8Foom7AUqrMcrmOK7g79KUYW1hSqs2ylY5FeNh3VzV/7Y9WbgHutTCem4Xs2ZnMdH9XdRtPVeweD/a4MP4b4nyVlsMqJJqi+g133ddIzSPxcpPfaCUHO9jZGhjC5ccXgjxIzhMqRrcear1/77hCt3/QdbYd4e2MYVTzjqwUoEdqkF9v4lfrgxTZG71+Jax3K9Paxq8QM15MdVHJrcvAncVDLzc/BnyRBtTQ6xpTbxtU1xcaFuQL1yuiyUi6OGUs3N34Q5SJ5/AqeAn6FQPglLIg0/wCowqSZm6rQPwAAAABJRU5ErkJggg==" style="width: 100px;height: 100px;"></div>
+                    </div>
+
+                    
+                    <br>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="observacion">Tipo Persona
+                                </label>
+                                <select data-evalClass="1" data-insert='1' data-edit='1' data-getValue='1' data-q="codTPersona" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="observacion">Género:
+                                </label>
+                                <select data-evalClass="1" data-insert='1' data-edit='1' data-getValue='1' data-q="codGeneroPersona" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="observacion">Nacionalidad:
+                                </label>
+                                <select data-evalClass="1" data-insert='1' data-edit='1' data-getValue='1' data-q="CodNacionalidad" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Departamento</label>
+                                <select data-evalClass="1" data-insert='1' data-edit='1' data-getValue='1' data-q="CodDepartamento" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="observacion">Estado Civil:
+                                </label>
+                                <select data-evalClass="1"t data-insert='1' data-edit='1' data-getValue='1' data-q="CodEstadoCivil" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+        
+                            <div class="form-group col-md-3">
+                                <label>Lugar de Nacimiento
+                                </label> <input data-evalClass="1" data-q="LugarNacimiento" data-insert='1' data-edit='1' type="text" style="text-transform: uppercase;" maxlength="30" autocomplete="off" class="form-control" 
+                                    name="facturas">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Fecha Nacimiento
+                                </label> <input data-evalClass="1" data-q="FechaNacimiento" data-insert='1' data-edit='1' type="text"  style="text-transform: uppercase;" maxlength="30"
+                                    autocomplete="off" class="form-control" type="text">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="fecha">Residencia Actual
+                                </label> 
+                                <input data-evalClass="1" data-q="ResidenciaActual" data-insert='1' data-edit='1' type="text"  class="form-control">
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Telefono Celular
+                                </label> <input data-evalClass="1" data-q="TelefonoCelular" data-insert='1' data-edit='1' type="text" style="text-transform: uppercase;" maxlength="30" autocomplete="off" class="form-control" 
+                                    name="facturas">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Telefono Fijo
+                                </label> <input data-evalClass="1" data-q="TelefonoFijo" data-insert='1' data-edit='1' type="text"  style="text-transform: uppercase;" maxlength="30"
+                                    autocomplete="off" class="form-control" type="text">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Estado</label>
+                                <select data-evalClass="1" data-insert='1' data-edit='1' data-getValue='1' data-q="CodEstatus" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <button *ngIf="mostrarInsert" (click)="ingresoForm(form,'Beneficiario agregado exitosamente');" type="button" class="btn btn-success"
+                                style="float: right; height: 31px; width: 124px; margin-bottom: 10px;">Agregar</button>
+                                <button *ngIf="!mostrarInsert" type="button" (click)="EditForm(form);" class="btn btn-info" style="float: right;height: 31px;width: 124px;margin-bottom: 10px;">Actualizar</button>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <button (click)="mostrarModal=true" *ngIf="mostrarFichas" type="button" class="btn btn-success"
+                                style="float: right; height: 31px;margin-bottom: 10px;">Ver Fichas</button>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <button type="button" (click)="resetForm();" class="btn btn-info" style="float: right;height: 31px;width: 124px;margin-bottom: 10px;">Limpiar</button>
+                            </div>
+                            <div class="form-group col-md-4">
+                            </div>
+                        </div>
+                </form>
+                    
+            </div>
+        </div>
+    </div>
+
+    <div class="{{ verFichas ? '' : 'divNone'}}" class="card">
+        <div class="card-body">
+            <div class="col-sm" style="margin-bottom: 20px;">
+                VER FICHAS
+            </div>  
+        </div>
+    </div>
+    </div>
+
+ -->

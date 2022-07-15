@@ -1,0 +1,614 @@
+
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="_servi.datospersonales" errorMessage="Name is required.">
+    <form [formGroup]="_servi.datospersonales">
+      <ng-template matStepLabel>Datos personales</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Sede</mat-label>
+            <mat-select formControlName="Cod_sede" name="food">
+              <mat-option *ngFor="let item of (_servi.responseSede$|async)" [value]="item.Cod_sede">
+                {{item.Nombre_sede}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo persona</mat-label>
+            <mat-select formControlName="Cod_tipo_persona">
+              <mat-option *ngFor="let item of (_servi.responsetipo_persona$|async)" [value]="item.Cod_tipo_persona">
+                {{item.Tipo_persona}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Genero</mat-label>
+            <mat-select formControlName="Cod_genero" name="food">
+              <mat-option *ngFor="let item of (_servi.responsegenero$|async)" [value]="item.Cod_genero">
+                {{item.Genero}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Nacionalidad</mat-label>
+            <mat-select formControlName="Cod_nacionalidad" name="food">
+              <mat-option *ngFor="let item of (_servi.responseNacionalidad$|async)" [value]="item.Cod_nacionalidad">
+                {{item.Nacionalidad}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado civil</mat-label>
+            <mat-select formControlName="Cod_estado_civil">
+              <mat-option *ngFor="let item of (_servi.responseestadocivil$|async)" [value]="item.Cod_estado_civil">
+                {{item.Estado_civil}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Departamento de Residencia</mat-label>
+            <mat-select formControlName="Cod_departamento">
+              <mat-option *ngFor="let item of (_servi.responsedepartamento$|async)" [value]="item.Cod_departamento">
+                {{item.Departamento}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Estatus</mat-label>
+            <mat-select formControlName="Cod_estatus">
+              <mat-option *ngFor="let item of (_servi.responsestatus$|async)" [value]="item.Cod_estatus">
+                {{item.Estatus}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Nombre de la Persona</mat-label>
+            <input matInput formControlName="Nombre">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Apellido de la Persona </mat-label>
+            <input matInput formControlName="Apellido">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <label for="avatar">Documento de identidad</label>
+            <input type="file" name="file" (change)="onUpload($event.target.files)">
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>No. Identidad de Persona</mat-label>
+            <input matInput formControlName="No_identidad">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Lugar de Nacimiento </mat-label>
+            <input matInput formControlName="Lugar_nacimiento">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field aclass="example-full-width" appearance="legacy">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="Fecha_nacimiento">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Residencia Actual </mat-label>
+            <input matInput formControlName="Residencia_actual">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Teléfono Fijo  de Persona </mat-label>
+            <input matInput formControlName="Telefono_fijo">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Correo Electrónico de Persona</mat-label>
+            <input matInput formControlName="Correo_electronico">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Teléfono celular de Persona </mat-label>
+            <input matInput formControlName="Telefono_celular">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <label for="avatar">Fotografía</label>
+            <input type="file" name="fileFoto" (change)="onUploadFoto($event.target.files)">
+        </div>
+      </div>
+      <div>
+        <button mat-button class="btn btn-primary" matStepperNext>Siguiente</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()" >Salir</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="_servi.general" errorMessage="Address is required.">
+    <form [formGroup]="_servi.general">
+      <ng-template matStepLabel>Ficha general</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Carnet Discapacidad </mat-label>
+            <mat-select formControlName="Carnet_discapacidad">
+              <mat-option value="Si">SI</mat-option>
+              <mat-option value="NO">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Acceso computadora</mat-label>
+            <mat-select formControlName="Acceso_computadora">
+              <mat-option value="Si">SI</mat-option>
+              <mat-option value="NO">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Acceso Internet</mat-label>
+            <mat-select formControlName="Acceso_internet">
+              <mat-option value="Si">SI</mat-option>
+              <mat-option value="NO">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Bono Discapacidad</mat-label>
+            <mat-select formControlName="Bono_discapacidad">
+              <mat-option value="Si">SI</mat-option>
+              <mat-option value="NO">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Instituto Procedencia de Persona </mat-label>
+            <input matInput formControlName="Instituto_procedencia">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Permanencia Instituto de Persona</mat-label>
+            <mat-select formControlName="Permanencia_institucion">
+              <mat-option value="Si">SI</mat-option>
+              <mat-option value="NO">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Nivel Académico de Persona</mat-label>
+            <mat-select formControlName="Nivel_academico">
+              <mat-option value="PRIMARIA COMPLETA">PRIMARIA COMPLETA</mat-option>
+              <mat-option value="SECUNDARIA COMPLETA">SECUNDARIA COMPLETA</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Teléfono Instituto de Procedencia </mat-label>
+            <input matInput formControlName="Telefono_instituto">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Correo instituto de Procedencia</mat-label>
+            <input matInput formControlName="Correo_instituto">
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-button class="btn btn-danger" matStepperPrevious>Anterior</button>
+      <button mat-button class="btn btn-primary" matStepperNext>Siguiente</button>
+      <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()" >Salir</button>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="_servi.inclusion" errorMessage="Address is required.">
+    <form [formGroup]="_servi.inclusion">
+      <ng-template matStepLabel>Ficha inclusion</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo inclusión</mat-label>
+            <mat-select formControlName="Cod_tipo_inclusion">
+              <mat-option *ngFor="let item of (_servi.responseinclusion$|async)" [value]="item.Cod_tipo_inclusion">
+                {{item.Tipo_inclusion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo Institución</mat-label>
+            <mat-select formControlName="Cod_tipo_institucion">
+              <mat-option *ngFor="let item of (_servi.responsetipoinstitucion$|async)" [value]="item.Cod_tipo_institucion">
+                {{item.Tipo_institucion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Nombre de Institución</mat-label>
+            <input matInput formControlName="Nombre_institucion_empresa">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Dirección de Institución. </mat-label>
+            <input matInput formControlName="Direccion_institucion">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Teléfono de Institución. </mat-label>
+            <input matInput formControlName="Telefono_institucion">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Correo de Institución</mat-label>
+            <input matInput formControlName="Correo_electronico_institucion">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field aclass="example-full-width" appearance="legacy">
+            <mat-label>Fecha de Ingreso a la Institución. </mat-label>
+            <input matInput [matDatepicker]="pickerrr" formControlName="Fecha_ingreso">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="pickerrr"></mat-datepicker-toggle>
+            <mat-datepicker #pickerrr></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Grado Académico de Persona</mat-label>
+            <input matInput formControlName="Grado_academico">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Seguimiento Inclusivo de APO-AUTIS </mat-label>
+            <mat-select formControlName="Seguimiento_inclusivo">
+              <mat-option value="Si">SI</mat-option>
+              <mat-option value="NO">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Tiempo Seguimiento Inclusivo </mat-label>
+            <input matInput formControlName="Tiempo_seguimiento_inclusivo">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Cargo a Desempeñar Empresa </mat-label>
+            <input matInput formControlName="Cargo_desempeñar">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field aclass="example-full-width" appearance="legacy">
+            <mat-label>Fecha matricula</mat-label>
+            <input matInput [matDatepicker]="pickerr" formControlName="Fecha_matricula">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="pickerr"></mat-datepicker-toggle>
+            <mat-datepicker #pickerr></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <button mat-button class="btn btn-danger" matStepperPrevious>Anterior</button>
+        <button mat-button class="btn btn-primary"  matStepperNext>Siguiente</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()" >Salir</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="_servi.salud" errorMessage="Address is required.">
+    <form [formGroup]="_servi.salud">
+      <ng-template matStepLabel>Ficha salud</ng-template>
+      <div class="row">
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Estado nutricional</mat-label>
+          <mat-select formControlName="Cod_estado_nutricional">
+            <mat-option value="1">SI</mat-option>
+            <mat-option value="2">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Agudeza Visual</mat-label>
+          <mat-select formControlName="Agudeza_visual">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Agudeza Auditiva</mat-label>
+          <mat-select formControlName="Agudeza_auditiva">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Condición Oral Deficiente</mat-label>
+          <mat-select formControlName="Condicion_oral_deficiente">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Esquema Vacunación</mat-label>
+          <mat-select formControlName="Esquema_vacunacion">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Anemia</mat-label>
+          <mat-select formControlName="Anemia">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Alergia</mat-label>
+          <mat-select formControlName="Alergia">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Descripción alergia </mat-label>
+          <input matInput formControlName="Descripcion_alergias">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Enfermedad Crónica</mat-label>
+          <mat-select formControlName="Enfermedad_cronica">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Descripción Crónica </mat-label>
+          <input matInput formControlName="Descripcion_enf_cronica">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Seguimiento Médico</mat-label>
+          <mat-select formControlName="Seguimiento_medico">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Medicación</mat-label>
+          <mat-select formControlName="Medicacion">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Nombre Medicamento </mat-label>
+          <input matInput formControlName="Nombre_medicamento">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Dosis de Medicamento</mat-label>
+          <input matInput formControlName="Dosis">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Tiempo ingesta del Medicamento</mat-label>
+          <input matInput formControlName="Tiempo_ingesta_medicacion">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Seguimiento Terapia Alternativa</mat-label>
+          <mat-select formControlName="Seguimiento_terapia_alternativa">
+            <mat-option value="Si">SI</mat-option>
+            <mat-option value="NO">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <mat-form-field class="example-full-width" appearance="legacy">
+          <mat-label>Tipo terapia alternativa </mat-label>
+          <input matInput formControlName="Tipo_terapia_alternativa">
+        </mat-form-field>
+      </div>
+      </div>
+      <div>
+        <button mat-button class="btn btn-danger" matStepperPrevious>Anterior</button>
+        <button mat-button class="btn btn-primary"  matStepperNext>Siguiente</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()" >Salir</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="_servi.familiares" errorMessage="Address is required.">
+    <form [formGroup]="_servi.familiares">
+      <ng-template matStepLabel>Ficha familiares</ng-template>
+      <div class="row">
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Nombre </mat-label>
+            <input matInput formControlName="Nombre_familiar">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Identidad </mat-label>
+            <input matInput formControlName="Identidad">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Telefono </mat-label>
+            <input matInput formControlName="Telefono">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Correo electronico </mat-label>
+            <input matInput formControlName="Correo">
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Parentesco</mat-label>
+            <mat-select formControlName="Cod_parentesco" name="food">
+              <mat-option *ngFor="let item of (_servi.responseparentesco$|async)" [value]="item.Cod_parentesco">
+                {{item.Parentesco}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Nivel Académico del Familiar</mat-label>
+            <mat-select formControlName="Cod_nivel_academico" name="food">
+              <mat-option *ngFor="let item of (_servi.responseNivel$|async)" [value]="item.Cod_nivel_academico">
+                {{item.Nivel_academico}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Ocupacion del Familiar </mat-label>
+            <input matInput formControlName="Ocupacion_actual">
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Labora acutualmente el Familiar</mat-label>
+            <mat-select formControlName="Labora_actualmente" name="food">
+              <mat-option value="si" >Si</mat-option>
+              <mat-option value="no">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Enfermades Crónicas</mat-label>
+            <mat-select formControlName="Enfermedades_cronicas" name="food">
+              <mat-option value="si" >Si</mat-option>
+              <mat-option value="no">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Descripcion Enfermedades Crónicas</mat-label>
+            <input matInput formControlName="Descripcion_enfermedades_cronicas">
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Ingreso promedio Familiar </mat-label>
+            <input matInput formControlName="Ingreso_promedio_personal">
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Miembros en el Hogar </mat-label>
+            <input matInput formControlName="Miembros_familia">
+          </mat-form-field>
+        </div>
+
+
+   <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Ingreso promedio Familiar</mat-label>
+            <input matInput formControlName="Ingreso_promedio_familiar">
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Monto Ingreso Familiar</mat-label>
+            <input matInput formControlName="Monto_ingreso">
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Ingreso Semanal Familiar </mat-label>
+            <input matInput formControlName="Ingreso_semanal">
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Ingreso Mensual Familiar </mat-label>
+            <input matInput formControlName="Ingreso_mensual">
+          </mat-form-field>
+        </div>
+        </div>
+      <div>
+        <button mat-button class="btn btn-danger" matStepperPrevious> Ficha Anterior</button>
+        <button mat-button class="btn btn-primary" (click)="guardar()" matStepperNext>Finalizar</button>
+        <button mat-button class="btn btn-primary float-right" (click)="cerrarmodal()" >Salir</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

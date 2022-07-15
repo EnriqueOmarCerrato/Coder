@@ -1,0 +1,64 @@
+<form autocomplete="off" [formGroup]="_servi.form">
+  <h4 class="text-center"><strong>{{ _servi.form.get('id_usuario')?.value ? "ACTUALIZAR":"CREAR"}}</strong></h4>
+  <div class="row justify-content-center">
+
+      <div class="col-lg-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="Cod_rol" name="food">
+            <mat-option *ngFor="let item of (_servi.responseroles$|async)" [value]="item.Cod_rol">
+              {{item.Rol}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>Sedes</mat-label>
+            <mat-select formControlName="Cod_sede" name="food">
+              <mat-option *ngFor="let item of (_servi.responseSede$|async)" [value]="item.Cod_sede">
+                {{item.Nombre_sede}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            <br>
+            <mat-form-field class="example-full-width" appearance="legacy">
+              <mat-label>Nombre usuario </mat-label>
+               <input (keyup)="onKeyUpEvent($event,'user')" autocomplete="off"
+               minlength="5" maxlength="30"  required class="form-control" matInput formControlName="nombre_usuario">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Contraseña </mat-label>
+             <input type="Password" class="form-control input-text" matInput formControlName="pass" #pass_>
+             <span class="input-group-text">
+              <img style="cursor: pointer;" (click)="mostrarPass(pass_)" src="https://www.svgrepo.com/show/11617/eye.svg" intrinsicsize="512 x 512" width="20"
+                  height="20" srcset="https://www.svgrepo.com/show/11617/eye.svg 4x" alt="Eye SVG Vector" title="Eye SVG Vector">
+            </span>
+        </mat-form-field>
+        <br>
+        <div class="form-group">
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Correo electronico </mat-label>
+             <input matInput formControlName="correo_electronico" type="email" [class.is-invalid]="_servi.form.get('correo_electronico').invalid && _servi.form.get('correo_electronico').touched">
+             <div *ngif="(_servi.form.get('correo_electronico').invalid && _servi.form.get('correo_electronico').touched) || _servi.form.get('correo_electronico').dirty">
+              <small class="text-danger" *ngif="_servi.form.get('correo_electronico').errors?.required">El correo electronico es requerido</small>
+              <small class="text-danger" *ngif="_servi.form.get('correo_electronico').errors?.email">El correo electronico es invalido</small>
+            </div>
+        </mat-form-field>
+        </div>
+      <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Estado usuario</mat-label>
+          <mat-select formControlName="estado_usuario" name="food">
+            <mat-option value="A">Activo</mat-option>
+            <mat-option value="I">Inactivo</mat-option>
+          </mat-select>
+        </mat-form-field>
+          <div class="text-center">
+              <button mat-raised-button  class="btn btn-primary p-2" color="accent" (click)="guardar()">{{_servi.form.get('id_usuario')?.value ? "ACTUALIZAR ":"CREAR"}}</button>
+              <button mat-raised-button color="warn" class="btn btn-danger p-2"  (click)="cerrarmodal()">Cerrar</button>
+          </div>
+      </div>
+
+  </div>
+</form>

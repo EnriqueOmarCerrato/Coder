@@ -1,0 +1,43 @@
+
+ <h4 class="text-center"><strong>{{ _servi.form.get('Cod_diagnostico')?.value ? "ACTUALIZAR":"CREAR"}}</strong>
+ </h4>
+<div class="row" *ngIf="!_servi.form.get('Cod_diagnostico')?.value">
+  <div class="col-lg-6">
+       <input class="form-control" maxlength="13" minlength="13" placeholder="Identidad" [(ngModel)]="text">
+  </div>
+  <div class="col-lg-6">
+    <button mat-raised-button class="btn btn-primary btn-block" color="accent"
+    (click)="buscar()">buscar</button>
+  </div>
+  <br>
+  <h5 class="p-2" *ngIf="si"><strong>Nombre: </strong>{{resultado[0]?.Nombre}} {{resultado[0]?.Apellido }}</h5>
+  <h5 class="p-2" *ngIf="sinresultado">Sin resultado</h5>
+</div>
+<br *ngIf="!_servi.form.get('Cod_diagnostico')?.value">
+
+<form autocomplete="off" [formGroup]="_servi.form">
+  <div class="row justify-content-center">
+
+    <div class="col-lg-12 box">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Diagnostico general</mat-label>
+        <textarea matInput  placeholder="Diagnostico_general" formControlName="Diagnostico_general"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-12">
+      <label for="avatar">Informe diagnostico</label>
+        <input type="file"  (change)="onUpload($event)">
+    </div> 
+    <br>
+    <br>
+
+    <div class="col-lg-12 p-2 box">
+        <button mat-raised-button class="m-2" class="btn btn-primary" color="accent"
+          (click)="guardar()">{{_servi.form.get('Cod_diagnostico')?.value ? "ACTUALIZAR ":"CREAR"}}</button>
+        <button mat-raised-button color="warn" class="btn btn-danger" (click)="cerrarmodal()">Cerrar</button>
+      </div>
+
+
+  </div>
+</form>

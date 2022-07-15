@@ -1,0 +1,23 @@
+<form autocomplete="off" [formGroup]="_servi.form">
+  <h4 class="text-center"><strong>{{ _servi.form.get('Cod_parametro')?.value ? "ACTUALIZAR":"CREAR"}}</strong></h4>
+  <div class="row justify-content-center">
+
+      <div class="col-lg-12">
+          <mat-form-field class="example-full-width" appearance="legacy">
+              <mat-label>Parametro </mat-label>
+               <input matInput formControlName="Parametro">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Valor </mat-label>
+             <input matInput formControlName="Valor">
+        </mat-form-field>
+        <br>
+          <div class="text-center">
+              <button mat-raised-button class="m-2" class="btn btn-primary" color="accent" (click)="guardar()">{{_servi.form.get('Cod_parametro')?.value ? "ACTUALIZAR ":"CREAR"}}</button>
+              <button mat-raised-button color="warn" class="btn btn-danger"  (click)="cerrarmodal()">Cerrar</button>
+          </div>
+      </div>
+
+  </div>
+</form>

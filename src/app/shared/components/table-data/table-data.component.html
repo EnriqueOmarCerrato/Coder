@@ -1,0 +1,14 @@
+<table id="tableData" *ngIf="data_['configTable']['campos'].length" border>
+  <thead>
+      <tr style="background: #0368a1;color: white;">
+        <td style="width: 12px;">#</td>
+        <th *ngFor="let campo of data_['configTable']['campos'];" style="width:{{campo['px']}}px;">
+            {{campo['nombre']}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click)="EditRow($event)" style="text-align: center;padding: 6px;border: 1px solid #ccc;" #tr [innerHtml]="data|returnTds:i:data_['configTable']['campos']" *ngFor="let data of data_['data']; index as i;">
+      </tr>
+    </tbody>
+  </table>

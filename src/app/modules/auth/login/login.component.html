@@ -1,0 +1,251 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+<div class="contenedor-login">
+
+    <div *ngIf="mostrarModal" class="col-lg-8 modale"
+        style="position: fixed;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+        <div style="height: 30px; width: 100%; text-align: center; background-color: #e2e2e2;">
+            <div *ngIf="!correoElectronico && !formPv" style="height: 100%; width: calc(100% - 260px); float: left; padding-top: 5px;">
+                {{mensajeModal}}: <b>{{user}}</b>
+            </div>
+            <div *ngIf="correoElectronico" style="height: 100%; width: calc(100% - 260px); float: left; padding-top: 5px;">
+                {{mensajeModal}}
+            </div>
+            <div *ngIf="formPv" style="height: 100%; width: calc(100% - 260px); float: left; padding-top: 5px;">
+                Establezca su pregunta de seguridad y su contraseña.
+            </div>
+            <div style="background-color: #ff3636; float: right; height: 100%; user-select: none; width: 80px; color: white; padding-top: 5px; cursor: pointer;"
+                                (click)="mostrarModal=false;">Cerrar</div>
+        </div>
+
+        <div *ngIf="loading" style="text-align: center;">
+            <app-loading></app-loading>
+        </div>
+        <div *ngIf="!loading && formCorreo" style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
+            <p>Se envio un correo electronico a la siguiente direccion <b>{{correo}}</b> con los pasos para su recuperacion.</p>
+        </div>
+
+
+        <div *ngIf="!loading && correoElectronico" style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
+            <div>
+                <div class="form-row">
+                  <div class="form-group col-md-3" style="padding-left: 30px;padding-right: 30px;">
+                    <label for="periodo">Escriba contraseña enviada</label>
+                    <input #pass0 type="Password" class="form-control input-text">
+                  </div>
+                    <div class="form-group col-md-3" style="padding-left: 30px;padding-right: 30px;">
+                        <label for="periodo">Escriba contraseña</label>
+                        <input #pass1 type="Password" class="form-control input-text">
+                    </div>
+                    <div class="form-group col-md-3" style="padding-left: 30px;padding-right: 30px;">
+                        <label for="periodo">Repita contraseña</label>
+                        <input #pass2 type="Password" class="form-control input-text">
+                    </div>
+                    <div class="form-group col-md-4" style="padding-left: 30px;margin-top: 18px;">
+                        <button class="btn btn-success" (click)="establecerPass(pass1,pass2,pass0,2)">Establecer Contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="!loading && formPv" style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
+            <div *ngIf="loadingPreguntas" style="text-align: center;">
+                <div class="lds-roller">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div [ngClass]="(loadingPreguntas)?'formInactive':''" class="form-row">
+
+
+                <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                    <label for="periodo">Seleccione Pregunta</label>
+                    <select #preguntaPv class="form-control" name="" id="">
+                        <option *ngFor="let opt of preguntasSeguridad" [value]="opt[0]">{{opt[1]}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                    <label for="periodo">Respuesta a Pregunta</label>
+                    <input #resPv type="text" class="form-control input-text" (keyup)="onKeyUpEvent($event,'user')">
+                </div>
+            </div>
+
+            <div>
+                <div class="form-row">
+                    <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                        <label for="periodo">Escriba contraseña</label>
+                        <input #pass1Pv type="Password" class="form-control input-text">
+                    </div>
+                    <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                        <label for="periodo">Repita contraseña</label>
+                        <input #pass2Pv type="Password" class="form-control input-text">
+                    </div>
+                    <div class="form-group col-md-4" style="padding-left: 30px;margin-top: 18px;">
+                        <button class="btn btn-success" (click)="establecerPreguntaPass(preguntaPv,resPv,pass1Pv,pass2Pv)">Guardar Pregunta y Contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="!loading && formPreguntas" style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
+            <div *ngIf="loadingPreguntas" style="text-align: center;">
+                <div class="lds-roller">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div [ngClass]="(loadingPreguntas||preguntaSeguridad)?'formInactive':''" class="form-row">
+
+
+                <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                    <label for="periodo">Seleccione Pregunta</label>
+                    <select #pregunta class="form-control" name="" id="">
+                        <option *ngFor="let opt of preguntasSeguridad" [value]="opt[0]">{{opt[1]}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                    <label for="periodo">Respuesta a Pregunta</label>
+                    <input #res type="text" class="form-control input-text" (keyup)="onKeyUpEvent($event,'user')">
+                </div>
+                <div class="form-group col-md-4" style="padding-left: 30px;margin-top: 18px;">
+                    <button class="btn btn-success" (click)="comprobarPreguntas(pregunta,res)">Comprobar</button>
+                </div>
+            </div>
+
+            <div *ngIf="preguntaSeguridad">
+                <div class="form-row">
+                    <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                        <label for="periodo">Escriba contraseña</label>
+                        <input #pass1 type="Password" class="form-control input-text">
+                    </div>
+                    <div class="form-group col-md-4" style="padding-left: 30px;padding-right: 30px;">
+                        <label for="periodo">Repita contraseña</label>
+                        <input #pass2 type="Password" class="form-control input-text">
+                    </div>
+                    <div class="form-group col-md-4" style="padding-left: 30px;margin-top: 18px;">
+                        <button class="btn btn-success" (click)="establecerPass(pass1,pass2,null,1)">Establecer Contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="mostrarModal" class="bloqueo"></div>
+    <!--Slider-->
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-inner active">
+            <img class="d-block w-100" src="assets/images/Autis.jpeg" alt="First slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/images/nuevo.jpeg" alt="Second slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/images/nuevo.jpeg" alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!--Formulario-->
+    <div class="contenedor-texto">
+        <div class="contenedor-form">
+            <h1 class="titutlo" style="font-size: 30px;margin-bottom: 20px;">{{titleForm}}</h1>
+            <!--Formulario de login-->
+            <form *ngIf="formLogin" class="formulario active">
+                <div class="input-group mb-3">
+                    <input (keyup)="onKeyUpEvent($event,'user')" #user_ type="text" placeholder="Ingresa tu nombre de usuario" name="Nombre_usuario" autocomplete="off"
+                    minlength="5" maxlength="15" required class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <input (keyup)="onKeyUpEvent($event,'pass')" #pass_ type="Password" placeholder="Ingresa tu Contraseña" name="Contrasena" required
+                    minlength="8" maxlength="30" required class="form-control">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <img style="cursor: pointer;" (click)="mostrarPass(pass_)" src="https://www.svgrepo.com/show/11617/eye.svg" intrinsicsize="512 x 512" width="20"
+                            height="20" srcset="https://www.svgrepo.com/show/11617/eye.svg 4x" alt="Eye SVG Vector" title="Eye SVG Vector">
+                      </span>
+                    </div>
+                </div>
+                <a style="cursor: pointer;" (click)="titleForm='RECUPERAR CUENTA';formLogin=false;formRecuperacion=true">¿Olvidaste la Contraseña?</a>
+                <!--BOTONES PARA INICIAR SESIÓN Y REGISTRARSE-->
+                <input type="button" (click)="login(user_,pass_)" value="Iniciar Sesión" name="signin" class="btn solid">
+                <input (click)="titleForm='SOLICITUD DE USUARIO';formLogin=false;formReg=true" type="button" routerLinkActive="active" value="Registrarse" name="signin"
+                    class="btn solid" />
+            </form>
+
+            <form *ngIf="formRecuperacion" class="formulario active">
+                <label for="">Usuario: </label>
+                <input #user placeholder="Ingresa tu nombre de usuario" (keyup)="onKeyUpEvent($event,'user')" style="margin-top: 10px;" type="text"  class="input-text"/>
+                <!--BOTONES PARA INICIAR SESIÓN Y REGISTRARSE-->
+                <input *ngIf="!usuarioVerificado"  (click)="verificarUser(user);" type="button" value="Verificar" class="btn solid"/>
+
+                <span *ngIf="usuarioVerificado">¿Cómo desea recuperar su cuenta?</span>
+                <div>
+                    <button (click)="getPreguntas(user);mostrarModal=true;mensajeModal='Recuperación de cuenta medienta pregunta, usuario';formCorreo=false;formPreguntas=true;" *ngIf="usuarioVerificado" class="btn solid" style="width: 47%;float: left;margin-bottom: 20px;">Vía Pregunta de seguridad</button>
+                    <button (click)="getCorreo(user);" *ngIf="usuarioVerificado" class="btn solid" style="float: right;width: 47%;">Vía Correo Electronico</button>
+                </div>
+                <input (click)="titleForm='INICIO DE SESIÓN';formLogin=true;formRecuperacion=false;usuarioVerificado=false;"  type="button" value="Regresar al login" name="signin" class="btn solid">
+            </form>
+
+            <form #form_ data-nform="insertUser" id="insertUser" *ngIf="formReg" class="formulario active">
+                <div class="input-group mb-3">
+                    <input data-q="nUser" data-insert='1' data-edit='0' (keyup)="onKeyUpEvent($event,'user')" type="text" placeholder="Ingresa su nombre de usuario" name="Nombre_usuario" autocomplete="off"
+                    minlength="5" maxlength="15" required class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <input data-q="emUser" data-insert='1' data-edit='0' type="text" placeholder="Ingresa su nombre correo electronico" name="Nombre_usuario" autocomplete="off"
+                    minlength="5" maxlength="15" required class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <input (keyup)="onKeyUpEvent($event,'pass')" #pass_1 type="Password" placeholder="Ingresa su Contraseña" required
+                    minlength="8" maxlength="30" required class="form-control">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <img style="cursor: pointer;" (click)="mostrarPass(pass_1)" src="https://www.svgrepo.com/show/11617/eye.svg" intrinsicsize="512 x 512" width="20"
+                            height="20" srcset="https://www.svgrepo.com/show/11617/eye.svg 4x" alt="Eye SVG Vector" title="Eye SVG Vector">
+                      </span>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input data-q="pTemp" data-insert='1' data-edit='0' (keyup)="onKeyUpEvent($event,'pass')" #pass_2 type="Password" placeholder="Repita su Contraseña" name="Contrasena" required
+                    minlength="8" maxlength="30" required class="form-control">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <img style="cursor: pointer;" (click)="mostrarPass(pass_2)" src="https://www.svgrepo.com/show/11617/eye.svg" intrinsicsize="512 x 512" width="20"
+                            height="20" srcset="https://www.svgrepo.com/show/11617/eye.svg 4x" alt="Eye SVG Vector" title="Eye SVG Vector">
+                      </span>
+                    </div>
+                </div>
+                <button (click)="ingresoForm(form_,pass_1,pass_2);" class="btn solid">Registrar</button>
+                <input (click)="titleForm='INICIO DE SESIÓN';formReg=false;formLogin=true;formRecuperacion=false;usuarioVerificado=false;"  type="button" value="Regresar al login" name="signin" class="btn solid">
+            </form>
+
+        </div>
+    </div>
+</div>

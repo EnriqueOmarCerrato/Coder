@@ -1,0 +1,24 @@
+<div class="container-fluid" style="
+background-color: #E9E9E9;
+position: fixed;
+">
+  <div class="page-header" style="padding-top: 2px;padding-bottom: 2px;">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="page-header-left">
+          <!--<h3>Sample</h3>-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="'/sample/sample-component'">
+                <app-feather-icons [icon]="'home'"></app-feather-icons>
+              </a></li>
+            <li *ngIf="$value['_value']['parentMenu']!=''" class="breadcrumb-item">{{ $value['_value']['parentMenu'] }}</li>
+            <li *ngIf="$value['_value']['parentMenu']!=''" class="breadcrumb-item active">{{ $value['_value']['childMenu'] }}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
